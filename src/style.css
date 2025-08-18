@@ -6,6 +6,8 @@ body {
   margin: 0;
 }
 
+arcgis-layer-list,
 arcgis-legend {
-  max-height: 96vh;
+  height: 100%;
+  width: 100%;
 }

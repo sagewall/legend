@@ -5,6 +5,7 @@ import "@esri/calcite-components/components/calcite-navigation";
 import "@esri/calcite-components/components/calcite-option";
 import "@esri/calcite-components/components/calcite-select";
 import "@esri/calcite-components/components/calcite-shell";
+import "@esri/calcite-components/components/calcite-shell-panel";
 import "./style.css";
 
 const app = document.querySelector<HTMLDivElement>("#app")!;
@@ -48,17 +49,31 @@ shell.appendChild(navigation);
 const map = document.createElement("arcgis-map");
 map.itemId = "e66cdb0c412245c6b0d8e58346a115fb";
 
+shell.appendChild(map);
+
+const legendShellPanel = document.createElement("calcite-shell-panel");
+legendShellPanel.slot = "panel-end";
+legendShellPanel.width = "l";
+legendShellPanel.resizable = true;
+
 const legend = document.createElement("arcgis-legend");
 legend.referenceElement = map;
-legend.slot = "top-right";
-map.appendChild(legend);
+
+legendShellPanel.appendChild(legend);
+shell.appendChild(legendShellPanel);
+
+const layerListShellPanel = document.createElement("calcite-shell-panel");
+layerListShellPanel.slot = "panel-start";
+layerListShellPanel.width = "l";
+layerListShellPanel.resizable = true;
 
 const layerList = document.createElement("arcgis-layer-list");
 layerList.referenceElement = map;
-layerList.slot = "top-left";
-map.appendChild(layerList);
+layerList.visibilityAppearance = "checkbox";
 
-shell.appendChild(map);
+layerListShellPanel.appendChild(layerList);
+shell.appendChild(layerListShellPanel);
+
 app.appendChild(shell);
 
 webMapSelect.addEventListener("calciteSelectChange", () => {
