@@ -70,6 +70,15 @@ layerListShellPanel.resizable = true;
 const layerList = document.createElement("arcgis-layer-list");
 layerList.referenceElement = map;
 layerList.visibilityAppearance = "checkbox";
+layerList.listItemCreatedFunction = (event) => {
+  const { item } = event;
+  if (item.layer?.type != "group") {
+    item.panel = {
+      content: "legend",
+      open: true,
+    };
+  }
+};
 
 layerListShellPanel.appendChild(layerList);
 shell.appendChild(layerListShellPanel);

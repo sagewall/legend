@@ -10,4 +10,5 @@ arcgis-layer-list,
 arcgis-legend {
   height: 100%;
   width: 100%;
+  overflow: hidden auto;
 }
