@@ -12,3 +12,7 @@ arcgis-legend {
   width: 100%;
   overflow: hidden auto;
 }
+
+calcite-shell-panel {
+  --calcite-shell-panel-max-width: 100%;
+}
