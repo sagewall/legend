@@ -1,6 +1,7 @@
 import "@arcgis/map-components/components/arcgis-layer-list";
 import "@arcgis/map-components/components/arcgis-legend";
 import "@arcgis/map-components/components/arcgis-map";
+import "@esri/calcite-components/components/calcite-button";
 import "@esri/calcite-components/components/calcite-navigation";
 import "@esri/calcite-components/components/calcite-option";
 import "@esri/calcite-components/components/calcite-select";
@@ -27,6 +28,7 @@ const webMaps = [
   },
   { label: "Binning", value: "08c2bea3b9f444918157b722296682f0" },
   { label: "Points", value: "deabb79be4f24d90b834c6860cb7b21c" },
+  { label: "Lines", value: "f06ce54b8c034d6791ae933a1365727d" },
   { label: "Polygons", value: "d3e2365eb6da4cf986717a5bced01d3a" },
   {
     label: "Spikes and time series",
@@ -44,12 +46,19 @@ webMaps.forEach((webMap) => {
 
 navigation.appendChild(webMapSelect);
 
+const zoomButton = document.createElement("calcite-button");
+zoomButton.iconEnd = "layer-zoom-to";
+zoomButton.id = "zoom-button";
+zoomButton.innerText = "Zoom to";
+zoomButton.slot = "content-end";
+navigation.appendChild(zoomButton);
+
 shell.appendChild(navigation);
 
-const map = document.createElement("arcgis-map");
-map.itemId = "e66cdb0c412245c6b0d8e58346a115fb";
+const mapElement = document.createElement("arcgis-map");
+mapElement.itemId = "e66cdb0c412245c6b0d8e58346a115fb";
 
-shell.appendChild(map);
+shell.appendChild(mapElement);
 
 const legendShellPanel = document.createElement("calcite-shell-panel");
 legendShellPanel.slot = "panel-end";
@@ -57,7 +66,7 @@ legendShellPanel.width = "l";
 legendShellPanel.resizable = true;
 
 const legend = document.createElement("arcgis-legend");
-legend.referenceElement = map;
+legend.referenceElement = mapElement;
 
 legendShellPanel.appendChild(legend);
 shell.appendChild(legendShellPanel);
@@ -68,7 +77,7 @@ layerListShellPanel.width = "l";
 layerListShellPanel.resizable = true;
 
 const layerList = document.createElement("arcgis-layer-list");
-layerList.referenceElement = map;
+layerList.referenceElement = mapElement;
 layerList.visibilityAppearance = "checkbox";
 layerList.listItemCreatedFunction = (event) => {
   const { item } = event;
@@ -87,5 +96,12 @@ app.appendChild(shell);
 
 webMapSelect.addEventListener("calciteSelectChange", () => {
   const selectedValue = webMapSelect.value;
-  map.itemId = selectedValue;
+  mapElement.itemId = selectedValue;
+});
+
+zoomButton.addEventListener("click", () => {
+  const layerView = mapElement.layerViews?.getItemAt(0);
+  if (layerView && layerView.layer.fullExtent) {
+    mapElement.goTo(layerView.layer.fullExtent.expand(0.1));
+  }
 });
