@@ -12,7 +12,3 @@ arcgis-legend {
   width: 100%;
   overflow: hidden auto;
 }
-
-calcite-navigation calcite-button {
-  padding: 0.75rem;
-}

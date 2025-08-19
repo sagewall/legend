@@ -2,11 +2,15 @@ import "@arcgis/map-components/components/arcgis-layer-list";
 import "@arcgis/map-components/components/arcgis-legend";
 import "@arcgis/map-components/components/arcgis-map";
 import "@esri/calcite-components/components/calcite-button";
+import "@esri/calcite-components/components/calcite-label";
 import "@esri/calcite-components/components/calcite-navigation";
 import "@esri/calcite-components/components/calcite-option";
+import "@esri/calcite-components/components/calcite-radio-button";
+import "@esri/calcite-components/components/calcite-radio-button-group";
 import "@esri/calcite-components/components/calcite-select";
 import "@esri/calcite-components/components/calcite-shell";
 import "@esri/calcite-components/components/calcite-shell-panel";
+import "@esri/calcite-components/components/calcite-switch";
 import "./style.css";
 
 const app = document.querySelector<HTMLDivElement>("#app")!;
@@ -16,6 +20,58 @@ const shell = document.createElement("calcite-shell");
 const navigation = document.createElement("calcite-navigation");
 navigation.label = "Legend Testing";
 navigation.slot = "header";
+
+const legendStyleLabel = document.createElement("calcite-label");
+legendStyleLabel.style.padding = "2.5rem 1rem";
+legendStyleLabel.innerText = "Card Style";
+legendStyleLabel.layout = "inline";
+legendStyleLabel.slot = "content-end";
+
+const legendStyleSwitch = document.createElement("calcite-switch");
+
+legendStyleLabel.appendChild(legendStyleSwitch);
+navigation.appendChild(legendStyleLabel);
+
+const layoutRadioButtonGroup = document.createElement(
+  "calcite-radio-button-group"
+);
+layoutRadioButtonGroup.layout = "horizontal";
+layoutRadioButtonGroup.style.display = "none";
+layoutRadioButtonGroup.style.padding = "2rem 1rem";
+layoutRadioButtonGroup.slot = "content-end";
+
+const autoLayoutLabel = document.createElement("calcite-label");
+autoLayoutLabel.innerText = "Auto";
+autoLayoutLabel.layout = "inline";
+
+const autoLayoutRadioButton = document.createElement("calcite-radio-button");
+autoLayoutRadioButton.checked = true;
+autoLayoutRadioButton.value = "auto";
+
+autoLayoutLabel.appendChild(autoLayoutRadioButton);
+layoutRadioButtonGroup.appendChild(autoLayoutLabel);
+
+const sideBySideLabel = document.createElement("calcite-label");
+sideBySideLabel.innerText = "Side by Side";
+sideBySideLabel.layout = "inline";
+
+const sideBySideRadioButton = document.createElement("calcite-radio-button");
+sideBySideRadioButton.value = "side-by-side";
+
+sideBySideLabel.appendChild(sideBySideRadioButton);
+layoutRadioButtonGroup.appendChild(sideBySideLabel);
+
+const stackLabel = document.createElement("calcite-label");
+stackLabel.innerText = "Stack";
+stackLabel.layout = "inline";
+
+const stackRadioButton = document.createElement("calcite-radio-button");
+stackRadioButton.value = "stack";
+
+stackLabel.appendChild(stackRadioButton);
+layoutRadioButtonGroup.appendChild(stackLabel);
+
+navigation.appendChild(layoutRadioButtonGroup);
 
 const webMapSelect = document.createElement("calcite-select");
 webMapSelect.label = "Web Map";
@@ -51,6 +107,7 @@ zoomButton.iconEnd = "layer-zoom-to";
 zoomButton.id = "zoom-button";
 zoomButton.innerText = "Zoom to";
 zoomButton.slot = "content-end";
+zoomButton.style.padding = "0.5rem 1rem";
 navigation.appendChild(zoomButton);
 
 shell.appendChild(navigation);
@@ -93,6 +150,26 @@ layerListShellPanel.appendChild(layerList);
 shell.appendChild(layerListShellPanel);
 
 app.appendChild(shell);
+
+layoutRadioButtonGroup.addEventListener("calciteRadioButtonGroupChange", () => {
+  if (autoLayoutRadioButton.checked) {
+    legend.legendStyle = { type: "card", layout: "auto" };
+  } else if (sideBySideRadioButton.checked) {
+    legend.legendStyle = { type: "card", layout: "side-by-side" };
+  } else if (stackRadioButton.checked) {
+    legend.legendStyle = { type: "card", layout: "stack" };
+  }
+});
+
+legendStyleSwitch.addEventListener("calciteSwitchChange", () => {
+  if (legendStyleSwitch.checked) {
+    legend.legendStyle = "card";
+    layoutRadioButtonGroup.style.display = "block";
+  } else {
+    legend.legendStyle = "classic";
+    layoutRadioButtonGroup.style.display = "none";
+  }
+});
 
 webMapSelect.addEventListener("calciteSelectChange", () => {
   const selectedValue = webMapSelect.value;
