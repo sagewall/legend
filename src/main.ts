@@ -21,6 +21,57 @@ const navigation = document.createElement("calcite-navigation");
 navigation.label = "Legend Testing";
 navigation.slot = "header";
 
+const basemapLegendVisibleLabel = document.createElement("calcite-label");
+basemapLegendVisibleLabel.innerText = "Basemap Legend Visible";
+basemapLegendVisibleLabel.layout = "inline";
+basemapLegendVisibleLabel.slot = "content-start";
+basemapLegendVisibleLabel.style.padding = "2.5rem 1rem";
+
+const basemapLegendVisibleSwitch = document.createElement("calcite-switch");
+basemapLegendVisibleLabel.appendChild(basemapLegendVisibleSwitch);
+navigation.appendChild(basemapLegendVisibleLabel);
+
+const hideLayersNotInCurrentViewLabel = document.createElement("calcite-label");
+hideLayersNotInCurrentViewLabel.innerText = "Hide Layers Not In Current View";
+hideLayersNotInCurrentViewLabel.layout = "inline";
+hideLayersNotInCurrentViewLabel.slot = "content-start";
+hideLayersNotInCurrentViewLabel.style.padding = "2.5rem 1rem";
+
+const hideLayersNotInCurrentViewSwitch =
+  document.createElement("calcite-switch");
+hideLayersNotInCurrentViewLabel.appendChild(hideLayersNotInCurrentViewSwitch);
+navigation.appendChild(hideLayersNotInCurrentViewLabel);
+
+const respectLayerDefinitionExpressionLabel =
+  document.createElement("calcite-label");
+respectLayerDefinitionExpressionLabel.innerText =
+  "Respect Layer Definition Expression";
+respectLayerDefinitionExpressionLabel.layout = "inline";
+respectLayerDefinitionExpressionLabel.slot = "content-start";
+respectLayerDefinitionExpressionLabel.style.padding = "2.5rem 1rem";
+
+const respectLayerDefinitionExpressionSwitch =
+  document.createElement("calcite-switch");
+respectLayerDefinitionExpressionLabel.appendChild(
+  respectLayerDefinitionExpressionSwitch
+);
+navigation.appendChild(respectLayerDefinitionExpressionLabel);
+
+const respectLayerVisibilityDisabledLabel =
+  document.createElement("calcite-label");
+respectLayerVisibilityDisabledLabel.innerText =
+  "Respect Layer Visibility Disabled";
+respectLayerVisibilityDisabledLabel.layout = "inline";
+respectLayerVisibilityDisabledLabel.slot = "content-start";
+respectLayerVisibilityDisabledLabel.style.padding = "2.5rem 1rem";
+
+const respectLayerVisibilityDisabledSwitch =
+  document.createElement("calcite-switch");
+respectLayerVisibilityDisabledLabel.appendChild(
+  respectLayerVisibilityDisabledSwitch
+);
+navigation.appendChild(respectLayerVisibilityDisabledLabel);
+
 const legendStyleLabel = document.createElement("calcite-label");
 legendStyleLabel.style.padding = "2.5rem 1rem";
 legendStyleLabel.innerText = "Card Style";
@@ -150,6 +201,30 @@ layerListShellPanel.appendChild(layerList);
 shell.appendChild(layerListShellPanel);
 
 app.appendChild(shell);
+
+basemapLegendVisibleSwitch.addEventListener("calciteSwitchChange", () => {
+  legend.basemapLegendVisible = basemapLegendVisibleSwitch.checked;
+});
+
+hideLayersNotInCurrentViewSwitch.addEventListener("calciteSwitchChange", () => {
+  legend.hideLayersNotInCurrentView = hideLayersNotInCurrentViewSwitch.checked;
+});
+
+respectLayerDefinitionExpressionSwitch.addEventListener(
+  "calciteSwitchChange",
+  () => {
+    legend.respectLayerDefinitionExpression =
+      respectLayerDefinitionExpressionSwitch.checked;
+  }
+);
+
+respectLayerVisibilityDisabledSwitch.addEventListener(
+  "calciteSwitchChange",
+  () => {
+    legend.respectLayerVisibilityDisabled =
+      respectLayerVisibilityDisabledSwitch.checked;
+  }
+);
 
 layoutRadioButtonGroup.addEventListener("calciteRadioButtonGroupChange", () => {
   if (autoLayoutRadioButton.checked) {
