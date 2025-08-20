@@ -79,16 +79,16 @@ webMapSelect.slot = "content-end";
 
 const webMaps = [
   {
-    label: "Various Renderer Tests",
-    value: "e66cdb0c412245c6b0d8e58346a115fb",
+    label: "Various Renderers",
+    value: "113b188cb5d64c579118c4943ccc2e26",
   },
-  { label: "Binning", value: "08c2bea3b9f444918157b722296682f0" },
-  { label: "Points", value: "deabb79be4f24d90b834c6860cb7b21c" },
+  { label: "Binning", value: "8e2f2bd8e5ed4a298cb19873ac08b1a9" },
+  { label: "Points", value: "bb272dd7692543b1acc4e104e8da5367" },
   { label: "Lines", value: "f06ce54b8c034d6791ae933a1365727d" },
-  { label: "Polygons", value: "d3e2365eb6da4cf986717a5bced01d3a" },
+  { label: "Polygons", value: "727707b4d2034951ab3dc84198dea3ed" },
   {
     label: "Spikes and time series",
-    value: "0bd951a1dd6a45ea8aeb44fffbf4c6bf",
+    value: "bc74cf4cb5fb43b39b34add7a83ed050",
   },
 ];
 
