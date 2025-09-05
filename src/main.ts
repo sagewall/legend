@@ -57,20 +57,15 @@ respectLayerDefinitionExpressionLabel.appendChild(
 );
 navigation.appendChild(respectLayerDefinitionExpressionLabel);
 
-const respectLayerVisibilityDisabledLabel =
-  document.createElement("calcite-label");
-respectLayerVisibilityDisabledLabel.innerText =
-  "Respect Layer Visibility Disabled";
-respectLayerVisibilityDisabledLabel.layout = "inline";
-respectLayerVisibilityDisabledLabel.slot = "content-start";
-respectLayerVisibilityDisabledLabel.style.padding = "2.5rem 1rem";
+const ignoreLayerVisibilityLabel = document.createElement("calcite-label");
+ignoreLayerVisibilityLabel.innerText = "Ignore Layer Visibility";
+ignoreLayerVisibilityLabel.layout = "inline";
+ignoreLayerVisibilityLabel.slot = "content-start";
+ignoreLayerVisibilityLabel.style.padding = "2.5rem 1rem";
 
-const respectLayerVisibilityDisabledSwitch =
-  document.createElement("calcite-switch");
-respectLayerVisibilityDisabledLabel.appendChild(
-  respectLayerVisibilityDisabledSwitch
-);
-navigation.appendChild(respectLayerVisibilityDisabledLabel);
+const ignoreLayerVisibilitySwitch = document.createElement("calcite-switch");
+ignoreLayerVisibilityLabel.appendChild(ignoreLayerVisibilitySwitch);
+navigation.appendChild(ignoreLayerVisibilityLabel);
 
 const legendStyleLabel = document.createElement("calcite-label");
 legendStyleLabel.style.padding = "2.5rem 1rem";
@@ -218,13 +213,9 @@ respectLayerDefinitionExpressionSwitch.addEventListener(
   }
 );
 
-respectLayerVisibilityDisabledSwitch.addEventListener(
-  "calciteSwitchChange",
-  () => {
-    legend.respectLayerVisibilityDisabled =
-      respectLayerVisibilityDisabledSwitch.checked;
-  }
-);
+ignoreLayerVisibilitySwitch.addEventListener("calciteSwitchChange", () => {
+  legend.ignoreLayerVisibility = ignoreLayerVisibilitySwitch.checked;
+});
 
 layoutRadioButtonGroup.addEventListener("calciteRadioButtonGroupChange", () => {
   if (autoLayoutRadioButton.checked) {
