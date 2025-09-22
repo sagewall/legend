@@ -182,15 +182,42 @@ layerListShellPanel.resizable = true;
 const layerList = document.createElement("arcgis-layer-list");
 layerList.referenceElement = mapElement;
 layerList.visibilityAppearance = "checkbox";
-layerList.listItemCreatedFunction = (event) => {
+layerList.listItemCreatedFunction = async (event) => {
   const { item } = event;
-  if (item.layer?.type != "group") {
+  const { layer } = item;
+
+  if (layer?.type != "group") {
     item.panel = {
       content: "legend",
       open: true,
     };
   }
+
+  await layer?.load();
+
+  if (layer && "fullExtent" in layer && layer.fullExtent) {
+    item.actionsSections = [
+      [
+        {
+          title: "Zoom to layer",
+          icon: "layer-zoom-to",
+          id: "zoom-to",
+        },
+      ],
+    ];
+  }
 };
+
+layerList.addEventListener("arcgisTriggerAction", (event) => {
+  const { id } = event.detail.action;
+  const { layer } = event.detail.item;
+
+  if (id === "zoom-to") {
+    if (layer && "fullExtent" in layer && layer.fullExtent) {
+      mapElement.goTo(layer.fullExtent);
+    }
+  }
+});
 
 layerListShellPanel.appendChild(layerList);
 shell.appendChild(layerListShellPanel);
