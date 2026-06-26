@@ -53,7 +53,7 @@ respectLayerDefinitionExpressionLabel.style.padding = "2.5rem 1rem";
 const respectLayerDefinitionExpressionSwitch =
   document.createElement("calcite-switch");
 respectLayerDefinitionExpressionLabel.appendChild(
-  respectLayerDefinitionExpressionSwitch
+  respectLayerDefinitionExpressionSwitch,
 );
 navigation.appendChild(respectLayerDefinitionExpressionLabel);
 
@@ -79,7 +79,7 @@ legendStyleLabel.appendChild(legendStyleSwitch);
 navigation.appendChild(legendStyleLabel);
 
 const layoutRadioButtonGroup = document.createElement(
-  "calcite-radio-button-group"
+  "calcite-radio-button-group",
 );
 layoutRadioButtonGroup.layout = "horizontal";
 layoutRadioButtonGroup.style.display = "none";
@@ -202,6 +202,7 @@ layerList.listItemCreatedFunction = async (event) => {
           title: "Zoom to layer",
           icon: "layer-zoom-to",
           id: "zoom-to",
+          type: "button",
         },
       ],
     ];
@@ -237,7 +238,7 @@ respectLayerDefinitionExpressionSwitch.addEventListener(
   () => {
     legend.respectLayerDefinitionExpression =
       respectLayerDefinitionExpressionSwitch.checked;
-  }
+  },
 );
 
 ignoreLayerVisibilitySwitch.addEventListener("calciteSwitchChange", () => {
